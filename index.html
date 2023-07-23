@@ -5,10 +5,30 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script defer src="./bundle.js"></script></head>
-  <link src="./styles.css">
+  <link rel="stylesheet" href="styles.css">
   <title>Todo List</title>
 </head>
 <body>
-  
+  <header>
+    <div>Logo</div>
+  </header>
+  <main>
+    <nav>
+      <button id="inboxBtn" class="inbox-btn">Inbox</button>
+      <button id="todayBtn" class="today-btn">Today</button>
+      <button id="thisWeekBtn" class="this-week-btn">This week</button>
+      <button id="addTaskBtn" class="add-task-btn">+</button>
+    </nav>
+    <div class="tasks-display">
+      <form>
+        <input type="text" id="taskTitle" name="Task Title" placeholder="Title">
+        <input type="text" id="taskDescription" name="Task Description" placeholder="Description">
+        <input type="button" id="formBtn" name="Add Form Task" value="Add task">
+      </form>
+    </div>
+  </main>
+  <footer>
+    <div>Developed by Yasen</div>
+  </footer>
 </body>
 </html>
