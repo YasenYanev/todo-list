@@ -1,0 +1,7 @@
+main {
+    height: 50vh;
+    display: flex;
+}
+main > * {
+    flex: 1;
+}
