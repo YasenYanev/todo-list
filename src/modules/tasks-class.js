@@ -1,5 +1,4 @@
 export default class {
-    #visability = "high"
     constructor(title, description) {
         this.title = title
         this.description = description
@@ -13,9 +12,5 @@ export default class {
 
     addPriority(priority) {
         this.priority = priority
-    }
-
-    get Visability() {
-        return this.#visability
     }
 }
