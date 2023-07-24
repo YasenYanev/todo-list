@@ -1,11 +1,13 @@
 import elementFromTemplate from "./html-elements-factory"
 
 export default (displayTab, tasksArr) => {
+    const form = displayTab.firstElementChild
+    displayTab.innerHTML = ""
+    displayTab.appendChild(form)
+
     tasksArr.forEach(task => {
-        // const defaultState = displayTab.cloneNode(true)
-        // displayTab = defaultState
         displayTab.appendChild(elementFromTemplate(`
-        <div class="task ${displayTab.classList[1]}">
+        <div class="task ${task.cssClass}">
             <div class="task-title">
             ${task.title}
             </div>
@@ -16,9 +18,12 @@ export default (displayTab, tasksArr) => {
         `))
     })
     if (displayTab.classList[1] == "Inbox") return
+    document.querySelectorAll(`.task`).forEach(task => {
+        task.style.display = "none"
+    })
     document.querySelectorAll(`.${displayTab.classList[1]}`).forEach(task => {
-        task.style.display = "block"
+         task.style.display = "block"
     })
 }
 
-// BUG: Rendering 1 task 2 times
+// Make tasks appear depending on the tab

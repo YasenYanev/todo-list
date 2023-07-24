@@ -1,7 +1,8 @@
 export default class {
-    constructor(title, description) {
+    constructor(title, description, cssClass) {
         this.title = title
         this.description = description
+        this.cssClass = cssClass
         this.dueDate
         this.priority
     }
