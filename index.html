@@ -14,12 +14,12 @@
   </header>
   <main>
     <nav>
-      <button id="inboxBtn" class="inbox-btn">Inbox</button>
-      <button id="todayBtn" class="today-btn">Today</button>
-      <button id="thisWeekBtn" class="this-week-btn">This week</button>
+      <button class="inbox-btn" data-nav-switch>Inbox</button>
+      <button class="today-btn" data-nav-switch>Today</button>
+      <button class="this-week-btn" data-nav-switch>This week</button>
       <button id="addTaskBtn" class="add-task-btn">+</button>
     </nav>
-    <div class="tasks-display">
+    <div class="tasks-display Inbox">
       <form>
         <input type="text" id="taskTitle" name="Task Title" placeholder="Title">
         <input type="text" id="taskDescription" name="Task Description" placeholder="Description">
