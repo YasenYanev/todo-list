@@ -1,4 +1,6 @@
 import elementFromTemplate from "./html-elements-factory"
+import isFuture from 'date-fns/isFuture'
+
 
 export default (displayTab, tasksArr) => {
     const form = displayTab.firstElementChild
@@ -6,6 +8,11 @@ export default (displayTab, tasksArr) => {
     displayTab.appendChild(form)
 
     tasksArr.forEach(task => {
+         if (isFuture(task.dueDate) === false) {
+             tasksArr.pop(task) 
+             return
+        }
+
         displayTab.appendChild(elementFromTemplate(`
         <div class="task ${task.cssClass}">
             <div class="task-title">
@@ -18,6 +25,7 @@ export default (displayTab, tasksArr) => {
         `))
     })
     if (displayTab.classList[1] == "Inbox") return
+
     document.querySelectorAll(`.task`).forEach(task => {
         task.style.display = "none"
     })
@@ -25,5 +33,3 @@ export default (displayTab, tasksArr) => {
          task.style.display = "block"
     })
 }
-
-// Make tasks appear depending on the tab
