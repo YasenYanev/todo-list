@@ -1,5 +1,14 @@
 import elementFromTemplate from "./html-elements-factory"
-import isFuture from 'date-fns/isFuture'
+import isFuture from "date-fns/isFuture"
+import parseISO from 'date-fns/parseISO'
+
+
+function checkDueDate(tasksArr, task) {
+    if (isFuture(parseISO(task.dueDate)) === false) {
+        tasksArr.pop(task) 
+        return false
+   }
+}
 
 
 export default (displayTab, tasksArr) => {
@@ -8,10 +17,8 @@ export default (displayTab, tasksArr) => {
     displayTab.appendChild(form)
 
     tasksArr.forEach(task => {
-         if (isFuture(task.dueDate) === false) {
-             tasksArr.pop(task) 
-             return
-        }
+
+        if(checkDueDate(tasksArr, task) === false) return
 
         displayTab.appendChild(elementFromTemplate(`
         <div class="task ${task.cssClass}">
@@ -20,6 +27,9 @@ export default (displayTab, tasksArr) => {
             </div>
             <div class="task-description">
             ${task.description}
+            </div>
+            <div class="task-description">
+            ${task.dueDate}
             </div>
         </div>
         `))
