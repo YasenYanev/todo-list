@@ -1,26 +1,24 @@
 import elementFromTemplate from "./html-elements-factory"
+import add from "date-fns/add"
+import parseISO from "date-fns/parseISO"
 import isFuture from "date-fns/isFuture"
-import parseISO from 'date-fns/parseISO'
+
+const tasksWrapper = document.querySelector(".tasks-wrapper")
 
 
 function checkDueDate(tasksArr, task) {
-    if (isFuture(parseISO(task.dueDate)) === false) {
+    if (isFuture(add(parseISO(task.dueDate), {hours: 23, minutes: 59, seconds:59})) === false) {
         tasksArr.pop(task) 
         return false
    }
 }
 
-
 export default (displayTab, tasksArr) => {
-    const form = displayTab.firstElementChild
-    displayTab.innerHTML = ""
-    displayTab.appendChild(form)
-
+    tasksWrapper.innerHTML = ""
     tasksArr.forEach(task => {
-
         if(checkDueDate(tasksArr, task) === false) return
 
-        displayTab.appendChild(elementFromTemplate(`
+        tasksWrapper.appendChild(elementFromTemplate(`
         <div class="task ${task.cssClass}">
             <div class="task-title">
             ${task.title}
