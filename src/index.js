@@ -5,14 +5,21 @@ import lightFormat from "date-fns/lightFormat"
 const tasksDisplayTab = document.querySelector(".tasks-display")
 const navSwitchBtns = document.querySelectorAll("[data-nav-switch]")
 const datePicker = document.getElementById("dueDate")
+const addTaskFormBtn = document.getElementById("addTaskBtn")
+const form = document.querySelector("form")
+const addBtnForm = document.getElementById("formBtn")
 
 
 const tasks = []
 
+
 datePicker.min = lightFormat(new Date(), "yyyy-MM-dd")
 datePicker.value = lightFormat(new Date(), "yyyy-MM-dd")
 
-const addBtnForm = document.getElementById("formBtn")
+addTaskFormBtn.addEventListener("click", () => {
+    addTaskFormBtn.style.display = "none"
+    form.style.display = "block"
+})
 
 addBtnForm.addEventListener("click", (e) => {
     e.preventDefault
@@ -20,9 +27,18 @@ addBtnForm.addEventListener("click", (e) => {
     const movie = taskFactory()
     tasks.push(movie)
 
-    document.querySelector("form").reset()
-    console.log(tasks)
+    form.reset()
     renderTasks(tasksDisplayTab, tasks)
+
+    addTaskFormBtn.style.display = "block"
+    form.style.display = "none"
+})
+
+document.getElementById("closeForm").addEventListener("click", () => {
+    form.reset()
+
+    addTaskFormBtn.style.display = "block"
+    form.style.display = "none"
 })
 
 navSwitchBtns.forEach(btn => {
