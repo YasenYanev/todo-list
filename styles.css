@@ -50,7 +50,8 @@ nav > * {
     background-color: var(--tasks-window-background);
 }
 .task,
-.add-task-btn {
+.add-task-btn,
+form {
     width: 35rem;
     margin: auto;
     border: 1px solid lightgreen;
@@ -68,7 +69,14 @@ nav > * {
     background-color: rgba(219, 218, 218, 0.2);
 }
 form {
+    display: none;
+    position: relative;
+    margin-top: .4em;
+    border: 2px solid lightgreen;
+}
+.close-form {
     position: absolute;
-    bottom: 0;
-    left: 13rem;
+    top: .3rem;
+    right: .5rem;
+    cursor: pointer;
 }
