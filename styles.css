@@ -9,7 +9,7 @@ html, body, div, nav, img {
 }
 
 :root {
-    --nav-bar-background: rgb(148, 250, 134);
+    --green: rgb(148, 250, 134);
     --tasks-window-background: #ffffff;
 }
 
@@ -31,7 +31,7 @@ main {
 }
 /* Nav section*/
 .nav-section {
-    background-color: var(--nav-bar-background);
+    background-color: var(--green);
 }
 nav {
     display: flex;
@@ -52,6 +52,7 @@ nav > * {
 .task,
 .add-task-btn,
 form {
+    height: 2.5rem;
     width: 35rem;
     margin: auto;
     border: 1px solid lightgreen;
@@ -59,7 +60,6 @@ form {
     border-right: none;
 }
 .add-task-btn {
-    height: 2.5rem;
     display: block;
     text-align: start;
     background-color: inherit;
@@ -68,15 +68,60 @@ form {
 .add-task-btn:hover {
     background-color: rgba(219, 218, 218, 0.2);
 }
+/* Form */
 form {
     display: none;
     position: relative;
+    height: fit-content;
     margin-top: .4em;
     border: 2px solid lightgreen;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(3, 2rem);
+    grid-template-areas:
+    "title title title title"
+    "highpr mediumpr lowpr date"
+    "add-form add-form close close";
+    gap: .3em;
 }
-.close-form {
-    position: absolute;
-    top: .3rem;
-    right: .5rem;
+.task-title {
+    grid-area: title;
+}
+.high-pr {
+    grid-area: highpr;
+}
+.medium-pr {
+    grid-area: mediumpr;
+}
+.low-pr {
+    grid-area: lowpr;
+}
+.date-picker {
+    grid-area: date;
+    border: none;
     cursor: pointer;
+}
+.form-add {
+    grid-area: add-form;
+}
+.form-close {
+    grid-area: close;
+}
+input[type="radio"] {
+    display: none;
+}
+input[type="radio"]:checked + label{
+    background-color: var(--green);
+    border-color: #3498db;
+  }
+label {
+    background-color: lightcyan;
+    text-align: center;
+    padding-top: .45rem;
+    cursor: pointer;
+}
+/* Task section */
+.task {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }

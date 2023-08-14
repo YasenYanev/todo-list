@@ -24,18 +24,16 @@
       <div class="tasks-wrapper"></div>
       <button id="addTaskBtn" class="add-task-btn">+ Add Task</button>
       <form>
-        <input type="text" id="taskTitle" name="Task Title" placeholder="Title">
-        <input type="text" id="taskDescription" name="Task Description" placeholder="Description">
-        <br>
-        <input type="radio" id="low" name="priority" value="Low">Low
-        <input type="radio" id="medium" name="priority" value="Medium">Medium
-        <input type="radio" id="high" name="priority" value="High">High
-        <br>
-        <label for="dueDate">Due date:</label>
-        <input type="date" id="dueDate">
-        <br>
-        <input type="button" id="formBtn" name="Add Form Task" value="Add task">
-        <div id="closeForm" class="close-form">X</div>
+        <input type="text" id="taskTitle" class="task-title" name="Task Title" placeholder="Title">
+        <input type="radio" id="low" class="low-pr" name="priority" value="Low">
+        <label for="low">Low</label>
+        <input type="radio" id="medium" class="medium-pr" name="priority" value="Medium">
+        <label for="medium">Medium</label>
+        <input type="radio" id="high" class="high-pr" name="priority" value="High">
+        <label for="high">High</label>
+        <input type="date" class="date-picker" id="dueDate">
+        <input type="button" id="formBtn" class="form-add" name="Add Form Task" value="Add task">
+        <input type="button" id="closeformBtn" class="form-close" name="Close" value="Close">
     </form>
     </div>
   </main>
