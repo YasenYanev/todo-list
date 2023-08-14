@@ -24,9 +24,6 @@ export default (displayTab, tasksArr) => {
             ${task.title}
             </div>
             <div class="task-description">
-            ${task.description}
-            </div>
-            <div class="task-description">
             ${task.dueDate}
             </div>
         </div>

@@ -18,7 +18,7 @@ datePicker.value = lightFormat(new Date(), "yyyy-MM-dd")
 
 addTaskFormBtn.addEventListener("click", () => {
     addTaskFormBtn.style.display = "none"
-    form.style.display = "block"
+    form.style.display = "grid"
 })
 
 addBtnForm.addEventListener("click", (e) => {
@@ -32,9 +32,10 @@ addBtnForm.addEventListener("click", (e) => {
 
     addTaskFormBtn.style.display = "block"
     form.style.display = "none"
+    console.log(tasks)
 })
 
-document.getElementById("closeForm").addEventListener("click", () => {
+document.getElementById("closeformBtn").addEventListener("click", () => {
     form.reset()
 
     addTaskFormBtn.style.display = "block"

@@ -9,7 +9,6 @@ export default () => {
     }
     return {
         title: document.getElementById("taskTitle").value,
-        description: document.getElementById("taskDescription").value,
         dueDate: document.getElementById("dueDate").value,
         cssClass: document.querySelector(".tasks-display").classList[1],
         priority: getCheckedBtn()
