@@ -44,8 +44,13 @@ document.getElementById("closeformBtn").addEventListener("click", () => {
 
 navSwitchBtns.forEach(btn => {
     btn.addEventListener("click", () => {
+        if (btn.textContent === tasksDisplayTab.classList[1].replace(/-/g," ")) return
+
         tasksDisplayTab.className = "tasks-display"
         tasksDisplayTab.classList.add(btn.innerHTML.replace(/ /g,"-"))
+
+        navSwitchBtns.forEach(btn => btn.classList.remove("active"))
+        btn.classList.toggle("active")
 
         renderTasks(tasksDisplayTab, tasks)
     })
