@@ -19,11 +19,20 @@
         <button class="today-btn" data-nav-switch>Today</button>
         <button class="this-week-btn" data-nav-switch>This week</button>
       </nav>
+      <div class="nav-projects">
+        <div>Projects:</div>
+        <button data-add-form class="add-project-btn">+ Add Project</button>
+        <form class="add-project-form">
+          <input type="text" id="projectTitle" class="project-title" name="Project Title" placeholder="Title">
+          <input type="button" data-add class="project-add" name="Add Project" value="Add">
+          <input type="button" data-close class="project-close" name="Close Project" value="Close">
+        </form>
+      </div>
     </div>
     <div class="tasks-display Inbox">
       <div class="tasks-wrapper"></div>
-      <button id="addTaskBtn" class="add-task-btn">+ Add Task</button>
-      <form>
+      <button data-add-form class="add-task-btn">+ Add Task</button>
+      <form class="add-task-form">
         <input type="text" id="taskTitle" class="task-title" name="Task Title" placeholder="Title">
         <div class="priority-txt">Select priority:</div>
         <input type="radio" id="low" class="low-pr" name="priority" value="Low">
@@ -32,9 +41,9 @@
         <label for="medium" class="medium-label">Medium</label>
         <input type="radio" id="high" class="high-pr" name="priority" value="High">
         <label for="high" class="high-label">High</label>
-        <input type="date" class="date-picker" id="dueDate">
-        <input type="button" id="formBtn" class="form-add" name="Add Form Task" value="Add task">
-        <input type="button" id="closeformBtn" class="form-close" name="Close" value="Close">
+        <input type="date" class="date-picker" id="dueDate" value="dd-mm-yyyy">
+        <input type="button" data-add class="form-add" name="Add Form Task" value="Add">
+        <input type="button" data-close class="form-close" name="Close" value="Close">
     </form>
     </div>
   </main>

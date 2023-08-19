@@ -36,9 +36,14 @@ main {
 
 }
 button {
+    text-align: start;
     border: none;
+    border-radius: .5rem;
     background-color: white;
     cursor: pointer;
+    height: 2.5rem;
+    width: 100%;
+    padding-left: 1rem;
 }
 button:hover {
     background-color: var(--main-section-color);
@@ -49,18 +54,17 @@ button.active {
 /* Nav section*/
 .nav-section {
     background-color: white;
-}
-nav {
     display: flex;
-    height: 8rem;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: start;
     align-items: center;
 }
-nav > * {
-    border-radius: .5rem;
-    width: 95%;
-    height: 2.5rem;
+nav,
+.nav-projects {
+    width: 87%;
+}
+nav {
+    height: min-content;
 }
 
 /* Tasks section */
@@ -71,7 +75,7 @@ nav > * {
 }
 .task,
 .add-task-btn,
-form {
+.add-task-form {
     height: 2.5rem;
     width: 35rem;
     margin: auto;
@@ -80,6 +84,7 @@ form {
     border-right: none;
 }
 .add-task-btn {
+    border-radius: 0;
     display: block;
     text-align: start;
     background-color: inherit;
@@ -87,39 +92,47 @@ form {
 .add-task-btn:hover {
     background-color: rgba(219, 218, 218, 0.2);
 }
-/* Form */
-form {
+/* Forms */
+.add-task-form,
+.add-project-form {
     display: none;
-    position: relative;
-    height: fit-content;
-    margin-top: .4em;
-    border: 2px solid lightgreen;
+    margin-top: .8rem;
+    border: none;
+    gap: .3em;
+}
+.add-task-form > *,
+.add-project-form > * {
+    border-radius: .5rem;
+    border: 1px solid grey;
+}
+.add-task-form {
     grid-template-columns: repeat(6, 1fr);
     grid-template-rows: repeat(3, 2rem);
     grid-template-areas:
     "title title title title title title"
     "priority-txt highpr mediumpr lowpr date date"
-    "add-form add-form add-form close close close";
-    gap: .3em;
+    "addd addd addd close close close";
 }
-form,
-form > * {
-    border-radius: .5rem;
+.add-project-form {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    grid-template-areas:
+    "title title"
+    "addd close";
+    height: 4rem;
 }
-form > * {
-    border: none;
-}
-form label,
-form input[type="button"] {
+.add-task-form label,
+input[type="button"] {
     cursor: pointer
 }
-.task-title {
+.task-title,
+.project-title {
     grid-area: title;
-    outline: none;
 }
 .priority-txt {
     grid-area: priority-txt;
     text-align: center;
+    border: none;
 }
 .high-pr {
     grid-area: highpr;
@@ -134,10 +147,12 @@ form input[type="button"] {
     grid-area: date;
     border: none;
 }
-.form-add {
-    grid-area: add-form;
+.form-add,
+.project-add {
+    grid-area: addd;
 }
-.form-close {
+.form-close,
+.project-close {
     grid-area: close;
 }
 input[type="radio"] {
