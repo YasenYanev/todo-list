@@ -5,42 +5,42 @@ import lightFormat from "date-fns/lightFormat"
 const tasksDisplayTab = document.querySelector(".tasks-display")
 const navSwitchBtns = document.querySelectorAll("[data-nav-switch]")
 const datePicker = document.getElementById("dueDate")
-const addTaskFormBtn = document.getElementById("addTaskBtn")
-const form = document.querySelector("form")
-const addBtnForm = document.getElementById("formBtn")
-
+const forms = document.querySelectorAll("form")
+const addFormBtns = document.querySelectorAll("[data-add-form]")
+const addBtns = document.querySelectorAll("[data-add]")
+const closeBtns = document.querySelectorAll("[data-close]")
 
 const tasks = []
 
-
 datePicker.min = lightFormat(new Date(), "yyyy-MM-dd")
-datePicker.value = lightFormat(new Date(), "yyyy-MM-dd")
 
-addTaskFormBtn.addEventListener("click", () => {
-    addTaskFormBtn.style.display = "none"
-    form.style.display = "grid"
-})
+// Event listeners
+for (let i = 0; i < forms.length; i++) {
+	addFormBtns[i].addEventListener("click", () => {
+    		addFormBtns[i].style.display = "none"
+    		forms[i].style.display = "grid"
+	})
+	addBtns[i].addEventListener("click", (e) => {
+    		e.preventDefault
 
-addBtnForm.addEventListener("click", (e) => {
-    e.preventDefault
+    		const task = taskFactory()
+    		tasks.push(task)
 
-    const movie = taskFactory()
-    tasks.push(movie)
+    		forms[i].reset()
+    		renderTasks(tasksDisplayTab, tasks)
 
-    form.reset()
-    renderTasks(tasksDisplayTab, tasks)
+    		addFormBtns[i].style.display = "block"
+    		forms[i].style.display = "none"
+    		console.log(tasks)
+	})
+	closeBtns[i].addEventListener("click", () => {
+    		forms[i].reset()
 
-    addTaskFormBtn.style.display = "block"
-    form.style.display = "none"
-    console.log(tasks)
-})
-
-document.getElementById("closeformBtn").addEventListener("click", () => {
-    form.reset()
-
-    addTaskFormBtn.style.display = "block"
-    form.style.display = "none"
-})
+    		addFormBtns[i].style.display = "block"
+    		forms[i].style.display = "none"
+	})
+	
+}
 
 navSwitchBtns.forEach(btn => {
     btn.addEventListener("click", () => {

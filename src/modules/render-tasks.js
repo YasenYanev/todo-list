@@ -16,7 +16,7 @@ function checkDueDate(tasksArr, task) {
 export default (displayTab, tasksArr) => {
     tasksWrapper.innerHTML = ""
     tasksArr.slice().reverse().forEach(task => {
-        if(checkDueDate(tasksArr, task) === false) return
+        // if(checkDueDate(tasksArr, task) === false) return
 
         tasksWrapper.appendChild(elementFromTemplate(`
         <div class="task ${task.cssClass}">
