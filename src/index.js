@@ -1,6 +1,7 @@
-import renderTasks from "./modules/render-tasks"
 import taskFactory from "./modules/tasks-factory"
+import projectsFactory from "./modules/projects-factory"
 import lightFormat from "date-fns/lightFormat"
+import renderUpdates from "./modules/render-updates"
 
 const tasksDisplayTab = document.querySelector(".tasks-display")
 const navSwitchBtns = document.querySelectorAll("[data-nav-switch]")
@@ -11,6 +12,7 @@ const addBtns = document.querySelectorAll("[data-add]")
 const closeBtns = document.querySelectorAll("[data-close]")
 
 const tasks = []
+const projects = []
 
 datePicker.min = lightFormat(new Date(), "yyyy-MM-dd")
 
@@ -22,16 +24,21 @@ for (let i = 0; i < forms.length; i++) {
 	})
 	addBtns[i].addEventListener("click", (e) => {
     		e.preventDefault
+			const buttonIdNum = i
 
-    		const task = taskFactory()
-    		tasks.push(task)
+			if (buttonIdNum === 0) {
+				const project = projectsFactory()
+				projects.push(project)
+				console.log(projects)
+			} else if (buttonIdNum === 1) {
+				const task = taskFactory()
+				tasks.push(task)
+			}
 
-    		forms[i].reset()
-    		renderTasks(tasksDisplayTab, tasks)
-
+			renderUpdates(tasksDisplayTab, tasks, projects)
+			forms[i].reset()
     		addFormBtns[i].style.display = "block"
     		forms[i].style.display = "none"
-    		console.log(tasks)
 	})
 	closeBtns[i].addEventListener("click", () => {
     		forms[i].reset()
@@ -42,18 +49,4 @@ for (let i = 0; i < forms.length; i++) {
 	
 }
 
-navSwitchBtns.forEach(btn => {
-    btn.addEventListener("click", () => {
-        if (btn.textContent === tasksDisplayTab.classList[1].replace(/-/g," ")) return
-
-        tasksDisplayTab.className = "tasks-display"
-        tasksDisplayTab.classList.add(btn.innerHTML.replace(/ /g,"-"))
-
-        navSwitchBtns.forEach(btn => btn.classList.remove("active"))
-        btn.classList.toggle("active")
-
-        renderTasks(tasksDisplayTab, tasks)
-    })
-})
-
-renderTasks(tasksDisplayTab, tasks)
+renderUpdates(tasksDisplayTab, tasks, projects)
