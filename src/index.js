@@ -4,7 +4,6 @@ import lightFormat from "date-fns/lightFormat"
 import renderUpdates from "./modules/render-updates"
 
 const tasksDisplayTab = document.querySelector(".tasks-display")
-const navSwitchBtns = document.querySelectorAll("[data-nav-switch]")
 const datePicker = document.getElementById("dueDate")
 const forms = document.querySelectorAll("form")
 const addFormBtns = document.querySelectorAll("[data-add-form]")
@@ -29,7 +28,6 @@ for (let i = 0; i < forms.length; i++) {
 			if (buttonIdNum === 0) {
 				const project = projectsFactory()
 				projects.push(project)
-				console.log(projects)
 			} else if (buttonIdNum === 1) {
 				const task = taskFactory()
 				tasks.push(task)

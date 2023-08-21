@@ -51,6 +51,28 @@ button:hover {
 button.active {
     background-color: var(--dark-green);
 }
+/* Header and Footer */
+header,
+footer {
+    display: flex;
+    align-items:center;
+}
+.header-logo {
+    font-size: 2rem;
+}
+footer {
+    background-color: rgb(55, 158, 46);
+    justify-content: center;
+}
+.footer-info {
+    display: grid;
+    color: #ffffff;
+    grid-template-columns: 11.3rem 1rem;
+}
+.gitLogo {
+    aspect-ratio: 1/1;
+    height: 1rem;
+}
 /* Nav section*/
 .nav-section {
     background-color: white;
@@ -93,7 +115,7 @@ nav {
     background-color: rgba(219, 218, 218, 0.2);
 }
 .projects-txt {
-    margin-bottom: 1rem;
+    margin: .5rem 0;
 }
 /* Forms */
 .add-task-form,
