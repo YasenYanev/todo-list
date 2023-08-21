@@ -3,6 +3,7 @@ import add from "date-fns/add"
 import parseISO from "date-fns/parseISO"
 import isFuture from "date-fns/isFuture"
 
+
 // Render tasks
 const tasksWrapper = document.getElementById("tasksWrapper")
 
@@ -30,13 +31,17 @@ const renderTasks = (displayTab, tasksArr) => {
         </div>
         `))
     })
-    if (displayTab.classList[1] == "Inbox") return
-
     document.querySelectorAll(`.task`).forEach(task => {
         task.style.display = "none"
     })
-    document.querySelectorAll(`.${displayTab.classList[1]}`).forEach(task => {
-         task.style.display = "block"
+    if (displayTab.classList[1] == "Inbox") {
+        document.querySelectorAll(`.task.Inbox, .task.Today, .task.This-week`).forEach(task => {
+            task.style.display = "flex"
+        })
+        return
+    }
+    document.querySelectorAll(`.task.${displayTab.classList[1]}`).forEach(task => {
+         task.style.display = "flex"
     })
 }
 // Render Projects
@@ -52,14 +57,15 @@ const renderProjects = (projectsArr) => {
     })
 }
 // Update navbar button listeners
-const updateNavListeners = (displayTab, tasksArr) => {
-    let navSwitchBtns = document.querySelectorAll("[data-nav-switch]")
+let navSwitchBtns
 
-    // Fix problem with .active stlye not getting removed
+const updateNavListeners = (displayTab, tasksArr) => {
+    navSwitchBtns = document.querySelectorAll("[data-nav-switch]")
+
     navSwitchBtns.forEach(btn => {
         btn.addEventListener("click", () => {
             if (btn.textContent === displayTab.classList[1].replace(/-/g," ")) return
-    
+
             displayTab.className = "tasks-display"
             displayTab.classList.add(btn.innerHTML.replace(/ /g,"-"))
     
