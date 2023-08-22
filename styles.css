@@ -11,7 +11,7 @@ html, body, div, nav, img {
 :root {
     --green: rgb(98, 248, 78);
     --light-green: rgba(98, 248, 78, .5);
-    --dark-green: rgb(107, 223, 92);
+    --dark-green: rgb(41, 207, 41);
     --yellow: rgb(255, 196, 0);
     --light-yellow: rgba(255, 196, 0, .5);
     --red: rgb(231, 69, 69);
@@ -22,15 +22,16 @@ html, body, div, nav, img {
 body {
     display: flex;
     flex-direction: column;
+    height: 100vh;
 }
 
 header, 
 footer {
-    height: 7vh;
+    height: 3rem;
 }
 
 main {
-    height: 86vh;
+    flex: 1;
     display: grid;
     grid-template-columns: 15rem 1fr;
 
@@ -50,6 +51,7 @@ button:hover {
 }
 button.active {
     background-color: var(--dark-green);
+    color: white;
 }
 /* Header and Footer */
 header,
@@ -58,10 +60,11 @@ footer {
     align-items:center;
 }
 .header-logo {
+    margin-left: 1rem;
     font-size: 2rem;
 }
 footer {
-    background-color: rgb(55, 158, 46);
+    background-color: var(--dark-green);
     justify-content: center;
 }
 .footer-info {
@@ -99,7 +102,7 @@ nav {
 .add-task-btn,
 .add-task-form {
     height: 2.5rem;
-    width: 35rem;
+    max-width: 35rem;
     margin: auto;
     border: 1px solid lightgreen;
     border-left: none;
