@@ -10,8 +10,16 @@ const addFormBtns = document.querySelectorAll("[data-add-form]")
 const addBtns = document.querySelectorAll("[data-add]")
 const closeBtns = document.querySelectorAll("[data-close]")
 
-const tasks = []
-const projects = []
+
+let tasks = localStorage.getItem("tasks")
+let projects = localStorage.getItem("projects")
+
+
+// Initialize or parse "tasks"
+tasks = tasks ? JSON.parse(tasks) : [];
+
+// Initialize or parse "projects"
+projects = projects ? JSON.parse(projects) : [];
 
 datePicker.min = lightFormat(new Date(), "yyyy-MM-dd")
 

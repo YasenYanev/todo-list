@@ -15,6 +15,8 @@ function checkDueDate(tasksArr, task) {
 }
 
 const renderTasks = (displayTab, tasksArr) => {
+    localStorage.setItem("tasks", JSON.stringify(tasksArr))
+
     tasksWrapper.innerHTML = ""
     tasksArr.slice().reverse().forEach(task => {
         // Bug with date check:
@@ -49,7 +51,7 @@ const projectWrapper = document.getElementById("projectsWrapper")
 
 const renderProjects = (projectsArr) => {
     projectWrapper.innerHTML = ""
-
+    localStorage.setItem("projects", JSON.stringify(projectsArr))
     projectsArr.forEach(project => {
         projectWrapper.appendChild(elementFromTemplate(`
         <button class="${project.title}" data-nav-switch>${project.title}</button>
