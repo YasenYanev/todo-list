@@ -1,6 +1,3 @@
-import parseISO from "date-fns/parseISO"
-import lightFormat from "date-fns/lightFormat"
-
 function getSelectedPriority() {
     const priorityButtons = document.getElementsByName("priority")
 
@@ -14,9 +11,7 @@ function getSelectedPriority() {
 export default () => {
     return {
         title: document.getElementById("taskTitle").value,
-        dueDateValue: document.getElementById("dueDate").value,
-        dueDate: lightFormat(parseISO(document.getElementById("dueDate").value), "dd.MM.yyyy"),
-        view: document.querySelector(".tasks-display").dataset.view,
+        dueDate: document.getElementById("dueDate").value,
         priority: getSelectedPriority()
     }
 }

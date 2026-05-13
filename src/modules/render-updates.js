@@ -7,15 +7,29 @@ import isSameYear from "date-fns/isSameYear"
 import isWithinInterval from "date-fns/isWithinInterval"
 import startOfWeek from "date-fns/startOfWeek"
 import endOfWeek from "date-fns/endOfWeek"
+import lightFormat from "date-fns/lightFormat"
 
 const tasksWrapper = document.getElementById("tasksWrapper")
 
-function getTaskDate(task) {
-    if (task.dueDateValue) {
-        return parseISO(task.dueDateValue)
-    }
+const viewMatchers = {
+    inbox: () => true,
+    today: (taskDate) => isSameDay(taskDate, new Date()),
+    "this-week": (taskDate) => isWithinInterval(taskDate, {
+        start: startOfWeek(new Date(), { weekStartsOn: 1 }),
+        end: endOfWeek(new Date(), { weekStartsOn: 1 }),
+    }),
+    "this-month": (taskDate) => isSameMonth(taskDate, new Date()),
+    "this-year": (taskDate) => isSameYear(taskDate, new Date()),
+}
 
+function getTaskDate(task) {
     if (task.dueDate) {
+        const isoDate = parseISO(task.dueDate)
+
+        if (!Number.isNaN(isoDate.getTime())) {
+            return isoDate
+        }
+
         return parse(task.dueDate, "dd.MM.yyyy", new Date())
     }
 
@@ -30,65 +44,44 @@ function isTaskVisible(task, currentView) {
     }
 
     if (!taskDate) {
-        return task.view === currentView
+        return false
     }
 
-    if (currentView === "today") {
-        return isSameDay(taskDate, new Date())
+    const matcher = viewMatchers[currentView]
+    return matcher ? matcher(taskDate) : false
+}
+
+function getTaskDateLabel(task) {
+    if (!task.dueDate) {
+        return ""
     }
 
-    if (currentView === "this-week") {
-        return isWithinInterval(taskDate, {
-            start: startOfWeek(new Date(), { weekStartsOn: 1 }),
-            end: endOfWeek(new Date(), { weekStartsOn: 1 }),
-        })
+    const parsedDate = getTaskDate(task)
+
+    if (!parsedDate) {
+        return task.dueDate
     }
 
-    if (currentView === "this-month") {
-        return isSameMonth(taskDate, new Date())
-    }
-
-    if (currentView === "this-year") {
-        return isSameYear(taskDate, new Date())
-    }
-
-    return task.view === currentView
+    return lightFormat(parsedDate, "dd.MM.yyyy")
 }
 
 const renderTasks = (tasksArr, currentView) => {
     localStorage.setItem("tasks", JSON.stringify(tasksArr))
 
     tasksWrapper.innerHTML = ""
-    tasksArr.slice().reverse().forEach(task => {
-        const taskView = task.view || task.cssClass || "inbox"
+    const visibleTasks = tasksArr.slice().reverse().filter(task => isTaskVisible(task, currentView))
 
+    visibleTasks.forEach(task => {
         tasksWrapper.appendChild(elementFromTemplate(`
-        <div class="task ${taskView}">
+        <div class="task">
             <div class="task-title">
             ${task.title}
             </div>
             <div class="task-description">
-            ${task.dueDate}
+            ${getTaskDateLabel(task)}
             </div>
         </div>
         `))
-    })
-    document.querySelectorAll(`.task`).forEach(task => {
-        task.style.display = "none"
-    })
-    const visibleTasks = tasksArr.slice().reverse()
-
-    visibleTasks.forEach((task, index) => {
-        if (!isTaskVisible(task, currentView)) {
-            return
-        }
-
-        const taskElements = document.querySelectorAll(".task")
-        const taskElement = taskElements[index]
-
-        if (taskElement) {
-            taskElement.style.display = "flex"
-        }
     })
 }
 
@@ -99,7 +92,7 @@ const renderProjects = (projectsArr) => {
     localStorage.setItem("projects", JSON.stringify(projectsArr))
     projectsArr.forEach(project => {
         projectWrapper.appendChild(elementFromTemplate(`
-        <button class="project-btn" type="button" data-project-btn data-project-title="${project.title}">${project.title}</button>
+        <button type="button">${project.title}</button>
         `))
     })
 }

@@ -2,15 +2,18 @@ import taskFactory from "./modules/tasks-factory"
 import projectsFactory from "./modules/projects-factory"
 import lightFormat from "date-fns/lightFormat"
 import renderUpdates from "./modules/render-updates"
+import "./styles.css"
 
 const currentView = (() => {
 	const currentPage = window.location.pathname.split("/").pop() || "index.html"
+	const pageViews = {
+		"today.html": "today",
+		"this-week.html": "this-week",
+		"this-month.html": "this-month",
+		"this-year.html": "this-year",
+	}
 
-	if (currentPage.includes("today")) return "today"
-	if (currentPage.includes("this-week")) return "this-week"
-	if (currentPage.includes("this-month")) return "this-month"
-	if (currentPage.includes("this-year")) return "this-year"
-	return "inbox"
+	return pageViews[currentPage] || "inbox"
 })()
 
 const datePicker = document.getElementById("dueDate")
