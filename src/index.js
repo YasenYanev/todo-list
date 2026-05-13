@@ -10,6 +10,7 @@ const currentView = (() => {
 		"today.html": "today",
 		"this-week.html": "this-week",
 		"this-month.html": "this-month",
+		"this-quarter.html": "this-quarter",
 		"this-year.html": "this-year",
 	}
 

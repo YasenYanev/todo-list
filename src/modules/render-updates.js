@@ -3,6 +3,7 @@ import parseISO from "date-fns/parseISO"
 import parse from "date-fns/parse"
 import isSameDay from "date-fns/isSameDay"
 import isSameMonth from "date-fns/isSameMonth"
+import isSameQuarter from "date-fns/isSameQuarter"
 import isSameYear from "date-fns/isSameYear"
 import isWithinInterval from "date-fns/isWithinInterval"
 import startOfWeek from "date-fns/startOfWeek"
@@ -19,6 +20,7 @@ const viewMatchers = {
         end: endOfWeek(new Date(), { weekStartsOn: 1 }),
     }),
     "this-month": (taskDate) => isSameMonth(taskDate, new Date()),
+    "this-quarter": (taskDate) => isSameQuarter(taskDate, new Date()),
     "this-year": (taskDate) => isSameYear(taskDate, new Date()),
 }
 

@@ -6,6 +6,7 @@ const pages = [
   { filename: 'today.html', pageTitle: 'Todo List - Today', activePage: 'today' },
   { filename: 'this-week.html', pageTitle: 'Todo List - This Week', activePage: 'this-week' },
   { filename: 'this-month.html', pageTitle: 'Todo List - This Month', activePage: 'this-month' },
+  { filename: 'this-quarter.html', pageTitle: 'Todo List - This Quarter', activePage: 'this-quarter' },
   { filename: 'this-year.html', pageTitle: 'Todo List - This Year', activePage: 'this-year' },
 ];
 
