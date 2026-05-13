@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script defer src="./bundle.js"></script>
+  <link rel="stylesheet" href="styles.css">
+  <title>Todo List - This Week</title>
+</head>
+<body>
+  <header>
+    <div class="header-logo">Todo List</div>
+  </header>
+  <main>
+    <div class="nav-section">
+      <nav>
+        <a href="index.html" class="nav-link" data-nav-switch>Inbox</a>
+        <a href="today.html" class="nav-link" data-nav-switch>Today</a>
+        <a href="this-week.html" class="nav-link active" aria-current="page" data-nav-switch>This week</a>
+        <a href="this-month.html" class="nav-link" data-nav-switch>This month</a>
+        <a href="this-year.html" class="nav-link" data-nav-switch>This year</a>
+      </nav>
+      <div class="nav-projects">
+        <div class="projects-txt">Projects:</div>
+        <div id="projectsWrapper" class="projects-wrapper"></div>
+        <button data-add-form class="add-project-btn">+ Add Project</button>
+        <form class="add-project-form">
+          <input type="text" id="projectTitle" class="project-title" name="Project Title" placeholder="Title">
+          <input type="button" data-add class="project-add" name="Add Project" value="Add">
+          <input type="button" data-close class="project-close" name="Close Project" value="Close">
+        </form>
+      </div>
+    </div>
+    <div class="tasks-display" data-view="this-week">
+      <div id="tasksWrapper" class="tasks-wrapper"></div>
+      <button data-add-form class="add-task-btn">+ Add Task</button>
+      <form class="add-task-form">
+        <input type="text" id="taskTitle" class="task-title" name="Task Title" placeholder="Title">
+        <div class="priority-txt">Select priority:</div>
+        <input type="radio" id="low" class="low-pr" name="priority" value="Low">
+        <label for="low" class="low-label">Low</label>
+        <input type="radio" id="medium" class="medium-pr" name="priority" value="Medium">
+        <label for="medium" class="medium-label">Medium</label>
+        <input type="radio" id="high" class="high-pr" name="priority" value="High">
+        <label for="high" class="high-label">High</label>
+        <input type="date" class="date-picker" id="dueDate" value="dd-mm-yyyy">
+        <input type="button" data-add class="form-add" name="Add Form Task" value="Add">
+        <input type="button" data-close class="form-close" name="Close" value="Close">
+    </form>
+    </div>
+  </main>
+  <footer>
+    <div class="footer-info">
+        <div class="footer-txt">Developed by YasenYanev</div> 
+        <a href="https://github.com/YasenYanev"><img src="./icons\github-mark-white.png" class="gitLogo"></a>
+    </div>
+</footer>
+</body>
+</html>

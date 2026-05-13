@@ -1,29 +1,69 @@
 import elementFromTemplate from "./html-elements-factory"
-import add from "date-fns/add"
 import parseISO from "date-fns/parseISO"
-import isFuture from "date-fns/isFuture"
+import parse from "date-fns/parse"
+import isSameDay from "date-fns/isSameDay"
+import isSameMonth from "date-fns/isSameMonth"
+import isSameYear from "date-fns/isSameYear"
+import isWithinInterval from "date-fns/isWithinInterval"
+import startOfWeek from "date-fns/startOfWeek"
+import endOfWeek from "date-fns/endOfWeek"
 
-
-// Render tasks
 const tasksWrapper = document.getElementById("tasksWrapper")
 
-function checkDueDate(tasksArr, task) {
-    if (isFuture(add(parseISO(task.dueDate), {hours: 23, minutes: 59, seconds:59})) === false) {
-        tasksArr.pop(task) 
-        return false
-   }
+function getTaskDate(task) {
+    if (task.dueDateValue) {
+        return parseISO(task.dueDateValue)
+    }
+
+    if (task.dueDate) {
+        return parse(task.dueDate, "dd.MM.yyyy", new Date())
+    }
+
+    return null
 }
 
-const renderTasks = (displayTab, tasksArr) => {
+function isTaskVisible(task, currentView) {
+    const taskDate = getTaskDate(task)
+
+    if (currentView === "inbox") {
+        return true
+    }
+
+    if (!taskDate) {
+        return task.view === currentView
+    }
+
+    if (currentView === "today") {
+        return isSameDay(taskDate, new Date())
+    }
+
+    if (currentView === "this-week") {
+        return isWithinInterval(taskDate, {
+            start: startOfWeek(new Date(), { weekStartsOn: 1 }),
+            end: endOfWeek(new Date(), { weekStartsOn: 1 }),
+        })
+    }
+
+    if (currentView === "this-month") {
+        return isSameMonth(taskDate, new Date())
+    }
+
+    if (currentView === "this-year") {
+        return isSameYear(taskDate, new Date())
+    }
+
+    return task.view === currentView
+}
+
+const renderTasks = (tasksArr, currentView) => {
     localStorage.setItem("tasks", JSON.stringify(tasksArr))
 
     tasksWrapper.innerHTML = ""
     tasksArr.slice().reverse().forEach(task => {
-        // Bug with date check:
-        // if(checkDueDate(tasksArr, task) === false) return
+        const taskView = task.view || task.cssClass || "inbox"
 
         tasksWrapper.appendChild(elementFromTemplate(`
-        <div class="task ${task.cssClass}">
+        <div class="task ${taskView}">
             <div class="task-title">
             ${task.title}
             </div>
@@ -36,17 +76,22 @@ const renderTasks = (displayTab, tasksArr) => {
     document.querySelectorAll(`.task`).forEach(task => {
         task.style.display = "none"
     })
-    if (displayTab.classList[1] == "Inbox") {
-        document.querySelectorAll(`.task.Inbox, .task.Today, .task.This-week`).forEach(task => {
-            task.style.display = "flex"
-        })
-        return
-    }
-    document.querySelectorAll(`.task.${displayTab.classList[1]}`).forEach(task => {
-         task.style.display = "flex"
+    const visibleTasks = tasksArr.slice().reverse()
+
+    visibleTasks.forEach((task, index) => {
+        if (!isTaskVisible(task, currentView)) {
+            return
+        }
+
+        const taskElements = document.querySelectorAll(".task")
+        const taskElement = taskElements[index]
+
+        if (taskElement) {
+            taskElement.style.display = "flex"
+        }
     })
 }
-// Render Projects
+
 const projectWrapper = document.getElementById("projectsWrapper")
 
 const renderProjects = (projectsArr) => {
@@ -54,33 +99,12 @@ const renderProjects = (projectsArr) => {
     localStorage.setItem("projects", JSON.stringify(projectsArr))
     projectsArr.forEach(project => {
         projectWrapper.appendChild(elementFromTemplate(`
-        <button class="${project.title}" data-nav-switch>${project.title}</button>
+        <button class="project-btn" type="button" data-project-btn data-project-title="${project.title}">${project.title}</button>
         `))
     })
 }
-// Update navbar button listeners
-let navSwitchBtns
 
-const updateNavListeners = (displayTab, tasksArr) => {
-    navSwitchBtns = document.querySelectorAll("[data-nav-switch]")
-
-    navSwitchBtns.forEach(btn => {
-        btn.addEventListener("click", () => {
-            if (btn.textContent === displayTab.classList[1].replace(/-/g," ")) return
-
-            displayTab.className = "tasks-display"
-            displayTab.classList.add(btn.innerHTML.replace(/ /g,"-"))
-    
-            navSwitchBtns.forEach(btn => btn.classList.remove("active"))
-            btn.classList.toggle("active")
-    
-            renderTasks(displayTab, tasksArr)
-        })
-    })
-}
-
-export default (displayTab, tasksArr, projectsArr) => {
-    renderTasks(displayTab, tasksArr)
+export default (tasksArr, projectsArr, currentView) => {
+    renderTasks(tasksArr, currentView)
     renderProjects(projectsArr)
-    updateNavListeners(displayTab, tasksArr)
 }

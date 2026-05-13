@@ -3,7 +3,16 @@ import projectsFactory from "./modules/projects-factory"
 import lightFormat from "date-fns/lightFormat"
 import renderUpdates from "./modules/render-updates"
 
-const tasksDisplayTab = document.querySelector(".tasks-display")
+const currentView = (() => {
+	const currentPage = window.location.pathname.split("/").pop() || "index.html"
+
+	if (currentPage.includes("today")) return "today"
+	if (currentPage.includes("this-week")) return "this-week"
+	if (currentPage.includes("this-month")) return "this-month"
+	if (currentPage.includes("this-year")) return "this-year"
+	return "inbox"
+})()
+
 const datePicker = document.getElementById("dueDate")
 const forms = document.querySelectorAll("form")
 const addFormBtns = document.querySelectorAll("[data-add-form]")
@@ -24,35 +33,34 @@ projects = projects ? JSON.parse(projects) : [];
 datePicker.min = lightFormat(new Date(), "yyyy-MM-dd")
 
 // Event listeners
-for (let i = 0; i < forms.length; i++) {
-	addFormBtns[i].addEventListener("click", () => {
-    		addFormBtns[i].style.display = "none"
-    		forms[i].style.display = "grid"
+for (let index = 0; index < forms.length; index++) {
+	addFormBtns[index].addEventListener("click", () => {
+	    	addFormBtns[index].style.display = "none"
+	    	forms[index].style.display = "grid"
 	})
-	addBtns[i].addEventListener("click", (e) => {
-    		e.preventDefault
-			const buttonIdNum = i
+	addBtns[index].addEventListener("click", (event) => {
+	    	event.preventDefault()
 
-			if (buttonIdNum === 0) {
+			if (index === 0) {
 				const project = projectsFactory()
 				projects.push(project)
-			} else if (buttonIdNum === 1) {
+			} else if (index === 1) {
 				const task = taskFactory()
 				tasks.push(task)
 			}
 
-			renderUpdates(tasksDisplayTab, tasks, projects)
-			forms[i].reset()
-    		addFormBtns[i].style.display = "block"
-    		forms[i].style.display = "none"
+			renderUpdates(tasks, projects, currentView)
+			forms[index].reset()
+	    	addFormBtns[index].style.display = "block"
+	    	forms[index].style.display = "none"
 	})
-	closeBtns[i].addEventListener("click", () => {
-    		forms[i].reset()
+	closeBtns[index].addEventListener("click", () => {
+	    	forms[index].reset()
 
-    		addFormBtns[i].style.display = "block"
-    		forms[i].style.display = "none"
+	    	addFormBtns[index].style.display = "block"
+	    	forms[index].style.display = "none"
 	})
 	
 }
 
-renderUpdates(tasksDisplayTab, tasks, projects)
+renderUpdates(tasks, projects, currentView)

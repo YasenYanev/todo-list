@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script defer src="./bundle.js"></script></head>
+  <script defer src="./bundle.js"></script>
   <link rel="stylesheet" href="styles.css">
   <title>Todo List</title>
 </head>
@@ -15,9 +15,11 @@
   <main>
     <div class="nav-section">
       <nav>
-        <button class="inbox-btn active" data-nav-switch>Inbox</button>
-        <button class="today-btn" data-nav-switch>Today</button>
-        <button class="this-week-btn" data-nav-switch>This week</button>
+        <a href="index.html" class="nav-link active" aria-current="page" data-nav-switch>Inbox</a>
+        <a href="today.html" class="nav-link" data-nav-switch>Today</a>
+        <a href="this-week.html" class="nav-link" data-nav-switch>This week</a>
+        <a href="this-month.html" class="nav-link" data-nav-switch>This month</a>
+        <a href="this-year.html" class="nav-link" data-nav-switch>This year</a>
       </nav>
       <div class="nav-projects">
         <div class="projects-txt">Projects:</div>
@@ -30,7 +32,7 @@
         </form>
       </div>
     </div>
-    <div class="tasks-display Inbox">
+    <div class="tasks-display" data-view="inbox">
       <div id="tasksWrapper" class="tasks-wrapper"></div>
       <button data-add-form class="add-task-btn">+ Add Task</button>
       <form class="add-task-form">
