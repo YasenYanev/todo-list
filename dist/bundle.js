@@ -976,7 +976,7 @@ eval("\n\n/* istanbul ignore next  */\nfunction styleTagTransform(css, styleElem
   \**********************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _modules_tasks_factory__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modules/tasks-factory */ \"./src/modules/tasks-factory.js\");\n/* harmony import */ var _modules_projects_factory__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modules/projects-factory */ \"./src/modules/projects-factory.js\");\n/* harmony import */ var date_fns_lightFormat__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! date-fns/lightFormat */ \"./node_modules/date-fns/esm/lightFormat/index.js\");\n/* harmony import */ var _modules_render_updates__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./modules/render-updates */ \"./src/modules/render-updates.js\");\n/* harmony import */ var _styles_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./styles.css */ \"./src/styles.css\");\n\r\n\r\n\r\n\r\n\r\n\r\nconst currentView = (() => {\r\n\tconst currentPage = window.location.pathname.split(\"/\").pop() || \"index.html\"\r\n\tconst pageViews = {\r\n\t\t\"today.html\": \"today\",\r\n\t\t\"this-week.html\": \"this-week\",\r\n\t\t\"this-month.html\": \"this-month\",\r\n\t\t\"this-quarter.html\": \"this-quarter\",\r\n\t\t\"this-year.html\": \"this-year\",\r\n\t}\r\n\r\n\treturn pageViews[currentPage] || \"inbox\"\r\n})()\r\n\r\nconst datePicker = document.getElementById(\"dueDate\")\r\nconst forms = document.querySelectorAll(\"form\")\r\nconst addFormBtns = document.querySelectorAll(\"[data-add-form]\")\r\nconst addBtns = document.querySelectorAll(\"[data-add]\")\r\nconst closeBtns = document.querySelectorAll(\"[data-close]\")\r\n\r\n\r\nlet tasks = localStorage.getItem(\"tasks\")\r\nlet projects = localStorage.getItem(\"projects\")\r\n\r\n\r\n// Initialize or parse \"tasks\"\r\ntasks = tasks ? JSON.parse(tasks) : [];\r\n\r\n// Initialize or parse \"projects\"\r\nprojects = projects ? JSON.parse(projects) : [];\r\n\r\ndatePicker.min = (0,date_fns_lightFormat__WEBPACK_IMPORTED_MODULE_4__[\"default\"])(new Date(), \"yyyy-MM-dd\")\r\n\r\n// Event listeners\r\nfor (let index = 0; index < forms.length; index++) {\r\n\taddFormBtns[index].addEventListener(\"click\", () => {\r\n\t    \taddFormBtns[index].style.display = \"none\"\r\n\t    \tforms[index].style.display = \"grid\"\r\n\t})\r\n\taddBtns[index].addEventListener(\"click\", (event) => {\r\n\t    \tevent.preventDefault()\r\n\r\n\t\t\tif (index === 0) {\r\n\t\t\t\tconst project = (0,_modules_projects_factory__WEBPACK_IMPORTED_MODULE_1__[\"default\"])()\r\n\t\t\t\tprojects.push(project)\r\n\t\t\t} else if (index === 1) {\r\n\t\t\t\tconst task = (0,_modules_tasks_factory__WEBPACK_IMPORTED_MODULE_0__[\"default\"])()\r\n\t\t\t\ttasks.push(task)\r\n\t\t\t}\r\n\r\n\t\t\t(0,_modules_render_updates__WEBPACK_IMPORTED_MODULE_2__[\"default\"])(tasks, projects, currentView)\r\n\t\t\tforms[index].reset()\r\n\t    \taddFormBtns[index].style.display = \"block\"\r\n\t    \tforms[index].style.display = \"none\"\r\n\t})\r\n\tcloseBtns[index].addEventListener(\"click\", () => {\r\n\t    \tforms[index].reset()\r\n\r\n\t    \taddFormBtns[index].style.display = \"block\"\r\n\t    \tforms[index].style.display = \"none\"\r\n\t})\r\n\t\r\n}\r\n\r\n(0,_modules_render_updates__WEBPACK_IMPORTED_MODULE_2__[\"default\"])(tasks, projects, currentView)\n\n//# sourceURL=webpack://todo-list/./src/index.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _modules_tasks_factory__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modules/tasks-factory */ \"./src/modules/tasks-factory.js\");\n/* harmony import */ var _modules_projects_factory__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modules/projects-factory */ \"./src/modules/projects-factory.js\");\n/* harmony import */ var date_fns_lightFormat__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! date-fns/lightFormat */ \"./node_modules/date-fns/esm/lightFormat/index.js\");\n/* harmony import */ var _modules_render_updates__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./modules/render-updates */ \"./src/modules/render-updates.js\");\n/* harmony import */ var _styles_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./styles.css */ \"./src/styles.css\");\n/* harmony import */ var _assets_github_mark_svg__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./assets/github-mark.svg */ \"./src/assets/github-mark.svg\");\n\r\n\r\n\r\n\r\n\r\n\r\n\r\nconst currentView = (() => {\r\n\tconst currentPage = window.location.pathname.split(\"/\").pop() || \"index.html\"\r\n\tconst pageViews = {\r\n\t\t\"today.html\": \"today\",\r\n\t\t\"this-week.html\": \"this-week\",\r\n\t\t\"this-month.html\": \"this-month\",\r\n\t\t\"this-quarter.html\": \"this-quarter\",\r\n\t\t\"this-year.html\": \"this-year\",\r\n\t}\r\n\r\n\treturn pageViews[currentPage] || \"inbox\"\r\n})()\r\n\r\nconst datePicker = document.getElementById(\"dueDate\")\r\nconst forms = document.querySelectorAll(\"form\")\r\nconst addFormBtns = document.querySelectorAll(\"[data-add-form]\")\r\nconst addBtns = document.querySelectorAll(\"[data-add]\")\r\nconst closeBtns = document.querySelectorAll(\"[data-close]\")\r\n\r\n\r\nlet tasks = localStorage.getItem(\"tasks\")\r\nlet projects = localStorage.getItem(\"projects\")\r\n\r\n\r\n// Initialize or parse \"tasks\"\r\ntasks = tasks ? JSON.parse(tasks) : [];\r\n\r\n// Initialize or parse \"projects\"\r\nprojects = projects ? JSON.parse(projects) : [];\r\n\r\ndatePicker.min = (0,date_fns_lightFormat__WEBPACK_IMPORTED_MODULE_5__[\"default\"])(new Date(), \"yyyy-MM-dd\")\r\n\r\n// Event listeners\r\nfor (let index = 0; index < forms.length; index++) {\r\n\taddFormBtns[index].addEventListener(\"click\", () => {\r\n\t    \taddFormBtns[index].style.display = \"none\"\r\n\t    \tforms[index].style.display = \"grid\"\r\n\t})\r\n\taddBtns[index].addEventListener(\"click\", (event) => {\r\n\t    \tevent.preventDefault()\r\n\r\n\t\t\tif (index === 0) {\r\n\t\t\t\tconst project = (0,_modules_projects_factory__WEBPACK_IMPORTED_MODULE_1__[\"default\"])()\r\n\t\t\t\tprojects.push(project)\r\n\t\t\t} else if (index === 1) {\r\n\t\t\t\tconst task = (0,_modules_tasks_factory__WEBPACK_IMPORTED_MODULE_0__[\"default\"])()\r\n\t\t\t\ttasks.push(task)\r\n\t\t\t}\r\n\r\n\t\t\t(0,_modules_render_updates__WEBPACK_IMPORTED_MODULE_2__[\"default\"])(tasks, projects, currentView)\r\n\t\t\tforms[index].reset()\r\n\t    \taddFormBtns[index].style.display = \"block\"\r\n\t    \tforms[index].style.display = \"none\"\r\n\t})\r\n\tcloseBtns[index].addEventListener(\"click\", () => {\r\n\t    \tforms[index].reset()\r\n\r\n\t    \taddFormBtns[index].style.display = \"block\"\r\n\t    \tforms[index].style.display = \"none\"\r\n\t})\r\n\t\r\n}\r\n\r\n(0,_modules_render_updates__WEBPACK_IMPORTED_MODULE_2__[\"default\"])(tasks, projects, currentView)\r\n\r\nwindow.addEventListener('DOMContentLoaded', () => {\r\n\tconst el = document.getElementById('footer-icon')\r\n\tif (el) el.src = _assets_github_mark_svg__WEBPACK_IMPORTED_MODULE_4__\r\n})\n\n//# sourceURL=webpack://todo-list/./src/index.js?");
 
 /***/ }),
 
@@ -1017,6 +1017,16 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\nfunction getSelectedPriority() {\r\n    const priorityButtons = document.getElementsByName(\"priority\")\r\n\r\n    for (let index = 0; index < priorityButtons.length; index++) {\r\n        if (priorityButtons[index].checked) {\r\n            return priorityButtons[index].value\r\n        }\r\n    }\r\n}\r\n\r\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (() => {\r\n    return {\r\n        title: document.getElementById(\"taskTitle\").value,\r\n        dueDate: document.getElementById(\"dueDate\").value,\r\n        priority: getSelectedPriority()\r\n    }\r\n});\n\n//# sourceURL=webpack://todo-list/./src/modules/tasks-factory.js?");
+
+/***/ }),
+
+/***/ "./src/assets/github-mark.svg":
+/*!************************************!*\
+  !*** ./src/assets/github-mark.svg ***!
+  \************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+eval("module.exports = __webpack_require__.p + \"assets/github-mark.svg\";\n\n//# sourceURL=webpack://todo-list/./src/assets/github-mark.svg?");
 
 /***/ }),
 
@@ -1231,6 +1241,18 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 /******/ 		};
 /******/ 	})();
 /******/ 	
+/******/ 	/* webpack/runtime/global */
+/******/ 	(() => {
+/******/ 		__webpack_require__.g = (function() {
+/******/ 			if (typeof globalThis === 'object') return globalThis;
+/******/ 			try {
+/******/ 				return this || new Function('return this')();
+/******/ 			} catch (e) {
+/******/ 				if (typeof window === 'object') return window;
+/******/ 			}
+/******/ 		})();
+/******/ 	})();
+/******/ 	
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
 /******/ 	(() => {
 /******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
@@ -1245,6 +1267,29 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 /******/ 			}
 /******/ 			Object.defineProperty(exports, '__esModule', { value: true });
 /******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/publicPath */
+/******/ 	(() => {
+/******/ 		var scriptUrl;
+/******/ 		if (__webpack_require__.g.importScripts) scriptUrl = __webpack_require__.g.location + "";
+/******/ 		var document = __webpack_require__.g.document;
+/******/ 		if (!scriptUrl && document) {
+/******/ 			if (document.currentScript)
+/******/ 				scriptUrl = document.currentScript.src;
+/******/ 			if (!scriptUrl) {
+/******/ 				var scripts = document.getElementsByTagName("script");
+/******/ 				if(scripts.length) {
+/******/ 					var i = scripts.length - 1;
+/******/ 					while (i > -1 && !scriptUrl) scriptUrl = scripts[i--].src;
+/******/ 				}
+/******/ 			}
+/******/ 		}
+/******/ 		// When supporting browsers where an automatic publicPath is not supported you must specify an output.publicPath manually via configuration
+/******/ 		// or pass an empty string ("") and set the __webpack_public_path__ variable from your code to use your own logic.
+/******/ 		if (!scriptUrl) throw new Error("Automatic publicPath is not supported in this browser");
+/******/ 		scriptUrl = scriptUrl.replace(/#.*$/, "").replace(/\?.*$/, "").replace(/\/[^\/]+$/, "/");
+/******/ 		__webpack_require__.p = scriptUrl;
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/nonce */

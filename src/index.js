@@ -3,6 +3,7 @@ import projectsFactory from "./modules/projects-factory"
 import lightFormat from "date-fns/lightFormat"
 import renderUpdates from "./modules/render-updates"
 import "./styles.css"
+import githubIcon from './assets/github-mark.svg'
 
 const currentView = (() => {
 	const currentPage = window.location.pathname.split("/").pop() || "index.html"
@@ -68,3 +69,8 @@ for (let index = 0; index < forms.length; index++) {
 }
 
 renderUpdates(tasks, projects, currentView)
+
+window.addEventListener('DOMContentLoaded', () => {
+	const el = document.getElementById('footer-icon')
+	if (el) el.src = githubIcon
+})
