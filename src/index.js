@@ -1,76 +1,105 @@
-import taskFactory from "./modules/tasks-factory"
-import projectsFactory from "./modules/projects-factory"
-import lightFormat from "date-fns/lightFormat"
 import renderUpdates from "./modules/render-updates"
+import { showForm, hideForm, getSelectedPriority } from "./modules/form-utils"
+import { loadData, saveData } from "./modules/storage"
+
+import lightFormat from "date-fns/lightFormat"
 import "./styles.css"
-import githubIcon from './assets/github-mark.svg'
-
-const currentView = (() => {
-	const currentPage = window.location.pathname.split("/").pop() || "index.html"
-	const pageViews = {
-		"today.html": "today",
-		"this-week.html": "this-week",
-		"this-month.html": "this-month",
-		"this-quarter.html": "this-quarter",
-		"this-year.html": "this-year",
-	}
-
-	return pageViews[currentPage] || "inbox"
-})()
-
-const datePicker = document.getElementById("dueDate")
-const forms = document.querySelectorAll("form")
-const addFormBtns = document.querySelectorAll("[data-add-form]")
-const addBtns = document.querySelectorAll("[data-add]")
-const closeBtns = document.querySelectorAll("[data-close]")
+import githubIcon from "./assets/github-mark.svg"
 
 
-let tasks = localStorage.getItem("tasks")
-let projects = localStorage.getItem("projects")
-
-
-// Initialize or parse "tasks"
-tasks = tasks ? JSON.parse(tasks) : [];
-
-// Initialize or parse "projects"
-projects = projects ? JSON.parse(projects) : [];
-
-datePicker.min = lightFormat(new Date(), "yyyy-MM-dd")
-
-// Event listeners
-for (let index = 0; index < forms.length; index++) {
-	addFormBtns[index].addEventListener("click", () => {
-	    	addFormBtns[index].style.display = "none"
-	    	forms[index].style.display = "grid"
-	})
-	addBtns[index].addEventListener("click", (event) => {
-	    	event.preventDefault()
-
-			if (index === 0) {
-				const project = projectsFactory()
-				projects.push(project)
-			} else if (index === 1) {
-				const task = taskFactory()
-				tasks.push(task)
-			}
-
-			renderUpdates(tasks, projects, currentView)
-			forms[index].reset()
-	    	addFormBtns[index].style.display = "block"
-	    	forms[index].style.display = "none"
-	})
-	closeBtns[index].addEventListener("click", () => {
-	    	forms[index].reset()
-
-	    	addFormBtns[index].style.display = "block"
-	    	forms[index].style.display = "none"
-	})
-	
+// View logic
+const pageViews = {
+  "today.html": "today",
+  "this-week.html": "this-week",
+  "this-month.html": "this-month",
+  "this-quarter.html": "this-quarter",
+  "this-year.html": "this-year",
 }
 
+const currentPage =
+  window.location.pathname.split("/").pop() || "index.html"
+
+const currentView =
+  pageViews[currentPage] || "inbox"
+
+
+// DOM
+const datePicker = document.getElementById("dueDate")
+const forms = document.querySelectorAll("form")
+
+
+// Data
+const tasks = loadData("tasks")
+const projects = loadData("projects")
+
+
+// Set minimum date
+if (datePicker) {
+  datePicker.min = lightFormat(new Date(), "yyyy-MM-dd")
+}
+
+
+// Forms logic
+forms.forEach((form, index) => {
+  const type = form.dataset.type
+
+  const openBtn =
+    document.querySelectorAll("[data-add-form]")[index]
+
+  const addBtn =
+    form.querySelector("[data-add]")
+
+  const closeBtn =
+    form.querySelector("[data-close]")
+
+
+  // OPEN FORM
+  openBtn?.addEventListener("click", () => {
+    showForm(form, openBtn)
+  })
+
+
+  // ADD ITEM
+  addBtn?.addEventListener("click", (e) => {
+    e.preventDefault()
+
+    if (type === "task") {
+      tasks.push({
+        title: document.getElementById("taskTitle").value,
+        dueDate: document.getElementById("dueDate").value,
+        priority: getSelectedPriority()
+      })
+    }else if (type === "project") {
+      projects.push({
+        title: document.getElementById("projectTitle").value
+      })
+    }
+
+    saveData("tasks", tasks)
+    saveData("projects", projects)
+
+    renderUpdates(tasks, projects, currentView)
+
+    hideForm(form, openBtn)
+  })
+
+
+  // CLOSE FORM
+  closeBtn?.addEventListener("click", () => {
+    hideForm(form, openBtn)
+  })
+})
+
+
+// Initial render
 renderUpdates(tasks, projects, currentView)
 
-window.addEventListener('DOMContentLoaded', () => {
-	const el = document.getElementById('footer-icon')
-	if (el) el.src = githubIcon
+
+// Footer icon
+document.addEventListener("DOMContentLoaded", () => {
+  const footerIcon = document.getElementById("footer-icon")
+
+  if (footerIcon) {
+    footerIcon.src = githubIcon
+  }
 })

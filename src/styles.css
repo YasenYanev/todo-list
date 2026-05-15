@@ -230,3 +230,19 @@ label {
     justify-content: space-between;
     align-items: center;
 }
+
+/* Priority gradients (left to right) */
+.task.priority-low {
+    background: linear-gradient(90deg, var(--light-green) 0%, transparent 40%);
+}
+.task.priority-medium {
+    background: linear-gradient(90deg, var(--light-yellow) 0%, transparent 40%);
+}
+.task.priority-high {
+    background: linear-gradient(90deg, var(--light-red) 0%, transparent 40%);
+}
+
+.task .task-title,
+.task .task-date {
+    padding: 0 0.6rem;
+}

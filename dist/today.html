@@ -24,7 +24,7 @@
         <div class="projects-txt">Projects:</div>
         <div id="projectsWrapper"></div>
         <button data-add-form class="add-project-btn">+ Add Project</button>
-        <form class="add-project-form">
+        <form class="add-project-form" data-type="project">
           <input type="text" id="projectTitle" class="project-title" placeholder="Title">
           <input type="button" data-add class="project-add" value="Add">
           <input type="button" data-close class="project-close" value="Close">
@@ -34,7 +34,7 @@
     <div class="tasks-display">
       <div id="tasksWrapper"></div>
       <button data-add-form class="add-task-btn">+ Add Task</button>
-      <form class="add-task-form">
+      <form class="add-task-form" data-type="task">
         <input type="text" id="taskTitle" class="task-title" placeholder="Title">
         <div class="priority-txt">Select priority:</div>
         <input type="radio" id="low" class="low-pr" name="priority" value="Low">

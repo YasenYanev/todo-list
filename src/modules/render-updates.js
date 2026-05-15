@@ -1,105 +1,178 @@
 import elementFromTemplate from "./html-elements-factory"
+
 import parseISO from "date-fns/parseISO"
 import parse from "date-fns/parse"
+
 import isSameDay from "date-fns/isSameDay"
 import isSameMonth from "date-fns/isSameMonth"
 import isSameQuarter from "date-fns/isSameQuarter"
 import isSameYear from "date-fns/isSameYear"
+
 import isWithinInterval from "date-fns/isWithinInterval"
 import startOfWeek from "date-fns/startOfWeek"
 import endOfWeek from "date-fns/endOfWeek"
+
 import lightFormat from "date-fns/lightFormat"
 
+
+// DOM elements
 const tasksWrapper = document.getElementById("tasksWrapper")
+const projectsWrapper = document.getElementById("projectsWrapper")
 
+
+// View filters
 const viewMatchers = {
-    inbox: () => true,
-    today: (taskDate) => isSameDay(taskDate, new Date()),
-    "this-week": (taskDate) => isWithinInterval(taskDate, {
-        start: startOfWeek(new Date(), { weekStartsOn: 1 }),
-        end: endOfWeek(new Date(), { weekStartsOn: 1 }),
+  inbox: () => true,
+
+  today: (date) =>
+    isSameDay(date, new Date()),
+
+  "this-week": (date) =>
+    isWithinInterval(date, {
+      start: startOfWeek(new Date(), {
+        weekStartsOn: 1,
+      }),
+
+      end: endOfWeek(new Date(), {
+        weekStartsOn: 1,
+      }),
     }),
-    "this-month": (taskDate) => isSameMonth(taskDate, new Date()),
-    "this-quarter": (taskDate) => isSameQuarter(taskDate, new Date()),
-    "this-year": (taskDate) => isSameYear(taskDate, new Date()),
+
+  "this-month": (date) =>
+    isSameMonth(date, new Date()),
+
+  "this-quarter": (date) =>
+    isSameQuarter(date, new Date()),
+
+  "this-year": (date) =>
+    isSameYear(date, new Date()),
 }
 
+
+// Convert task date string → Date object
 function getTaskDate(task) {
-    if (task.dueDate) {
-        const isoDate = parseISO(task.dueDate)
-
-        if (!Number.isNaN(isoDate.getTime())) {
-            return isoDate
-        }
-
-        return parse(task.dueDate, "dd.MM.yyyy", new Date())
-    }
-
+  if (!task.dueDate) {
     return null
+  }
+
+  // Try ISO format first
+  const isoDate = parseISO(task.dueDate)
+
+  if (!Number.isNaN(isoDate.getTime())) {
+    return isoDate
+  }
+
+  // Fallback format: dd.MM.yyyy
+  return parse(
+    task.dueDate,
+    "dd.MM.yyyy",
+    new Date()
+  )
 }
 
+
+// Check if task should appear in current view
 function isTaskVisible(task, currentView) {
-    const taskDate = getTaskDate(task)
+  if (currentView === "inbox") {
+    return true
+  }
 
-    if (currentView === "inbox") {
-        return true
-    }
+  const taskDate = getTaskDate(task)
 
-    if (!taskDate) {
-        return false
-    }
+  if (!taskDate) {
+    return false
+  }
 
-    const matcher = viewMatchers[currentView]
-    return matcher ? matcher(taskDate) : false
+  const matcher = viewMatchers[currentView]
+
+  return matcher ? matcher(taskDate) : false
 }
 
-function getTaskDateLabel(task) {
-    if (!task.dueDate) {
-        return ""
-    }
 
-    const parsedDate = getTaskDate(task)
+// Format task date for display
+function formatTaskDate(task) {
+  const taskDate = getTaskDate(task)
 
-    if (!parsedDate) {
-        return task.dueDate
-    }
+  if (!taskDate) {
+    return ""
+  }
 
-    return lightFormat(parsedDate, "dd.MM.yyyy")
+  return lightFormat(taskDate, "dd.MM.yyyy")
 }
 
-const renderTasks = (tasksArr, currentView) => {
-    localStorage.setItem("tasks", JSON.stringify(tasksArr))
 
-    tasksWrapper.innerHTML = ""
-    const visibleTasks = tasksArr.slice().reverse().filter(task => isTaskVisible(task, currentView))
+// Create task HTML element
+function createTaskElement(task) {
+  const priorityClass = task.priority
+    ? `priority-${task.priority.toLowerCase()}`
+    : ""
 
-    visibleTasks.forEach(task => {
-        tasksWrapper.appendChild(elementFromTemplate(`
-        <div class="task">
-            <div class="task-title">
-            ${task.title}
-            </div>
-            <div class="task-description">
-            ${getTaskDateLabel(task)}
-            </div>
-        </div>
-        `))
-    })
+  return elementFromTemplate(`
+    <div class="task ${priorityClass}">
+      <div class="task-title">
+        ${task.title}
+      </div>
+
+      <div class="task-date">
+        ${formatTaskDate(task)}
+      </div>
+    </div>
+  `)
 }
 
-const projectWrapper = document.getElementById("projectsWrapper")
 
-const renderProjects = (projectsArr) => {
-    projectWrapper.innerHTML = ""
-    localStorage.setItem("projects", JSON.stringify(projectsArr))
-    projectsArr.forEach(project => {
-        projectWrapper.appendChild(elementFromTemplate(`
-        <button type="button">${project.title}</button>
-        `))
-    })
+// Render tasks
+function renderTasks(tasksArr, currentView) {
+  localStorage.setItem(
+    "tasks",
+    JSON.stringify(tasksArr)
+  )
+
+  tasksWrapper.innerHTML = ""
+
+  const visibleTasks = tasksArr
+    .slice()
+    .reverse()
+    .filter(task =>
+      isTaskVisible(task, currentView)
+    )
+
+  visibleTasks.forEach(task => {
+    tasksWrapper.appendChild(
+      createTaskElement(task)
+    )
+  })
 }
 
-export default (tasksArr, projectsArr, currentView) => {
-    renderTasks(tasksArr, currentView)
-    renderProjects(projectsArr)
+
+// Render projects
+function renderProjects(projectsArr) {
+  localStorage.setItem(
+    "projects",
+    JSON.stringify(projectsArr)
+  )
+
+  projectsWrapper.innerHTML = ""
+
+  projectsArr.forEach(project => {
+    const projectButton = elementFromTemplate(`
+      <button type="button">
+        ${project.title}
+      </button>
+    `)
+
+    projectsWrapper.appendChild(projectButton)
+  })
+}
+
+
+// Main render function
+export default function renderUpdates(
+  tasksArr,
+  projectsArr,
+  currentView
+) {
+  renderTasks(tasksArr, currentView)
+
+  renderProjects(projectsArr)
 }
